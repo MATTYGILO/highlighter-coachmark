@@ -247,7 +247,7 @@ class _HighlighterCoachMarkState extends State<_HighlighterCoachMarkWidget>
                 markPosition: position,
                 child: CustomPaint(
                   child: Opacity(
-                      opacity: _opacityAnimation.value*(1/opacity),
+                      opacity: _opacityAnimation.value*(1/widget.opacity),
                       child: Material(
                           type: MaterialType.transparency,
                           child: Stack(
