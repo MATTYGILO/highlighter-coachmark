@@ -44,7 +44,7 @@ import 'dart:ui' as ui;
 ///      });
 /// ```
 class CoachMark {
-  CoachMark({this.bgColor = const Color(0xB2212121), this.opacity = 0.8, this.blur= 3.0});
+  CoachMark({this.bgColor = const Color(0xB2212121), this.opacity = 0.8, this.blur = 3.0});
 
   /// Global key to get an access for CoachMark's State
   GlobalKey<_HighlighterCoachMarkState> globalKey;
@@ -164,7 +164,8 @@ class _HighlighterCoachMarkWidget extends StatefulWidget {
   final VoidCallback doClose;
   final Color bgColor;
   final double opacity;
-
+  final double blur;
+  
   @override
   _HighlighterCoachMarkState createState() => new _HighlighterCoachMarkState();
 }
