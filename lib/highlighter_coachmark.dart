@@ -44,7 +44,12 @@ import 'dart:ui' as ui;
 ///      });
 /// ```
 class CoachMark {
-  CoachMark({this.bgColor = const Color(0xB2212121), this.opacity = 0.8, this.blur = 3.0});
+  CoachMark({
+    this.bgColor = const Color(0xB2212121), 
+    this.opacity = 0.8, 
+    this.blur = 3.0,
+    this.blockPointer = false
+  });
 
   /// Global key to get an access for CoachMark's State
   GlobalKey<_HighlighterCoachMarkState> globalKey;
@@ -57,7 +62,10 @@ class CoachMark {
   
   /// Maximum blur of the CoachMark
   double blur;
-
+  
+  /// Whether to block pointing on objects below CoachMark
+  bool blockPointer;
+    
   /// State visibility of CoachMark
   bool _isVisible = false;
 
@@ -114,6 +122,7 @@ class CoachMark {
                 key: globalKey,
                 bgColor: bgColor,
                 blur: blur,
+                blockPointer: blockPointer,
                 opacity: opacity,
                 markRect: markRect,
                 markShape: markShape,
@@ -155,7 +164,8 @@ class _HighlighterCoachMarkWidget extends StatefulWidget {
     @required this.doClose,
     @required this.bgColor,
     @required this.opacity,
-    @required this.blur
+    @required this.blur,
+    @required this.blockPointer,
   }) : super(key: key);
 
   final Rect markRect;
@@ -165,6 +175,7 @@ class _HighlighterCoachMarkWidget extends StatefulWidget {
   final Color bgColor;
   final double opacity;
   final double blur;
+  final bool blockPointer;
   
   @override
   _HighlighterCoachMarkState createState() => new _HighlighterCoachMarkState();
@@ -227,6 +238,13 @@ class _HighlighterCoachMarkState extends State<_HighlighterCoachMarkWidget>
         builder: (BuildContext context, Widget child) {
           return Stack(
             children: <Widget>[
+              ///This is a container that fills the whole screen
+              ///This blocks pointer on widgets below
+              widget.blockPointer? Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+              ) : Container(),
+              
               ClipPath(
                 clipper: clipper,
                 child: BackdropFilter(
