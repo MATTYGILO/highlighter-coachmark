@@ -243,6 +243,7 @@ class _HighlighterCoachMarkState extends State<_HighlighterCoachMarkWidget>
               widget.blockPointer? Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
+                
               ) : Container(),
               
               ClipPath(
