@@ -44,13 +44,19 @@ import 'dart:ui' as ui;
 ///      });
 /// ```
 class CoachMark {
-  CoachMark({this.bgColor = const Color(0xB2212121)});
+  CoachMark({this.bgColor = const Color(0xB2212121), this.opacity = 0.8, this.blur= 3.0});
 
   /// Global key to get an access for CoachMark's State
   GlobalKey<_HighlighterCoachMarkState> globalKey;
 
   /// Background color
   Color bgColor;
+  
+  /// Maximum opacity of the CoachMark
+  double opacity;
+  
+  /// Maximum blur of the CoachMark
+  double blur;
 
   /// State visibility of CoachMark
   bool _isVisible = false;
@@ -107,6 +113,8 @@ class CoachMark {
           builder: (BuildContext context) => new _HighlighterCoachMarkWidget(
                 key: globalKey,
                 bgColor: bgColor,
+                blur: blur,
+                opacity: opacity,
                 markRect: markRect,
                 markShape: markShape,
                 doClose: close,
@@ -146,6 +154,8 @@ class _HighlighterCoachMarkWidget extends StatefulWidget {
     @required this.children,
     @required this.doClose,
     @required this.bgColor,
+    @required this.opacity,
+    @required this.blur
   }) : super(key: key);
 
   final Rect markRect;
@@ -153,6 +163,7 @@ class _HighlighterCoachMarkWidget extends StatefulWidget {
   final List<Widget> children;
   final VoidCallback doClose;
   final Color bgColor;
+  final double opacity;
 
   @override
   _HighlighterCoachMarkState createState() => new _HighlighterCoachMarkState();
@@ -176,7 +187,7 @@ class _HighlighterCoachMarkState extends State<_HighlighterCoachMarkWidget>
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _blurAnimation = new Tween(begin: 0.0, end: 3.0).animate(
+    _blurAnimation = new Tween(begin: 0.0, end: widget.blur).animate(
       new CurvedAnimation(
         parent: _controller,
         curve: new Interval(
@@ -186,7 +197,7 @@ class _HighlighterCoachMarkState extends State<_HighlighterCoachMarkWidget>
         ),
       ),
     );
-    _opacityAnimation = new Tween(begin: 0.0, end: 0.8).animate(
+    _opacityAnimation = new Tween(begin: 0.0, end: widget.opacity).animate(
       new CurvedAnimation(
         parent: _controller,
         curve: new Interval(
